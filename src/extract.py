@@ -2,12 +2,22 @@ import requests
 import os
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+import re
 
 
 def extract_book_data(url: str):
+    """
+    Extraction des données depuis la page web et transformation
+    Args:
+        url: URL de la page du livre
+
+    Returns:
+    Dict contenant les données tranformées du livre
+    """
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
-    title = soup.body.h1.string
+
+    title = re.sub(r'\([^)]+\)', "", soup.body.h1.string)
     product_information = soup.findAll(['td']) # récupération de la table product information
     nb_av = product_information[5].string # récupération du nombre de livre dispo
     nb_av = int(nb_av[nb_av.index("(") + 1:nb_av.index(")")].replace(" available", "").strip())
@@ -15,8 +25,7 @@ def extract_book_data(url: str):
     description = soup.head.find(attrs={"name": "description"})['content'].strip()
     star_review = soup.find(class_="star-rating")["class"][1]
     img_url = urljoin(url, soup.find('img')["src"])
-    img_name = soup.find('img')["alt"]
-    extract_img(img_url, img_name)
+    extract_img(img_url, title)
 
     book_dict = {"product_page_url": url,
                  "universal_ product_code": product_information[0].string,
@@ -37,6 +46,6 @@ def extract_img(img_url: str, img_name: str):
     path = "data/images"
     if not os.path.exists(path):
         os.makedirs(path)
-    file_fullname = path + '/' + img_name.replace(" ", "_") + ".jpg"
+    file_fullname = path + '/' + re.sub(r"[^_a-zA-Z0-9]", "", img_name.replace(" ", "_")) + ".jpg"
     with open(file_fullname, "wb") as file:
         file.write(file_img.content)

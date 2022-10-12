@@ -4,29 +4,17 @@ import os
 from urllib.parse import urljoin
 from extract import extract_book_data
 from store_data import store_in_csv
+from navigate import browse_category
 import pprint
 
 pp = pprint.PrettyPrinter(sort_dicts=False)
 
-url_category = "http://books.toscrape.com/catalogue/category/books/romance_8/index.html"
+home_url = "http://books.toscrape.com/index.html"
 
-page = requests.get(url_category)
-soup = BeautifulSoup(page.content, 'html.parser')
-data = []
-next_page = soup.find(class_="next")
-# Récupération de toutes les données de la page
-for tag in soup.findAll('article'):
-    url = urljoin(url_category, tag.a['href'])
-    # print(url)
-    data_temp = extract_book_data(url)
-    # pp.pprint(data_temp)
-    data.append(data_temp)
+home_page = requests.get(home_url)
+home_soup = BeautifulSoup(home_page.content, 'html.parser')
+nav_bar = home_soup.find(class_= "nav-list")
+for category in nav_bar.ul.findAll("a"):
+    url_category = urljoin(home_url, category['href'])
+    browse_category(url_category)
 
-#pp.pprint(data)
-store_in_csv('test.csv', data)
-#
-# url = "http://books.toscrape.com/catalogue/the-perfect-play-play-by-play-1_352/index.html"
-# data = extract_book_data(url)
-#
-#
-# pp.pprint(data)
