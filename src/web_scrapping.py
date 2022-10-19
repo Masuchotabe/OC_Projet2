@@ -1,20 +1,11 @@
-import requests
-from bs4 import BeautifulSoup
-import os
-from urllib.parse import urljoin
-from extract import extract_book_data
 from store_data import store_in_csv
-from navigate import browse_category
-import pprint
+from navigate import browse_category, get_category_urls
 
-pp = pprint.PrettyPrinter(sort_dicts=False)
 
 home_url = "http://books.toscrape.com/index.html"
-
-home_page = requests.get(home_url)
-home_soup = BeautifulSoup(home_page.content, 'html.parser')
-nav_bar = home_soup.find(class_= "nav-list")
-for category in nav_bar.ul.findAll("a"):
-    url_category = urljoin(home_url, category['href'])
-    browse_category(url_category)
-
+# récupération des url de catégorie
+urls_category = get_category_urls(home_url)
+# pour chaque catégrorie on browse et récupère les data de chaque livre qu'on met en csv ensuite
+for url in urls_category:
+    books_data = browse_category(url)
+    store_in_csv(books_data)
