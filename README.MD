@@ -14,8 +14,8 @@
     - linux : `source env/Scripts/activate`
   - Installer les bibliothèques mentionnées dans le fichier requirements.txt : `pip install -r requirements.txt` 
  
-## Éxécution
- Éxécuter le programme avec la commande `python web_scrapping.py` 
+## Exécution
+ Exécuter le programme avec la commande `python web_scrapping.py` 
   
 ## Information 
 Les données sont extraites et enregistrées dans le sous dossier "/data". Les données issues d'une éxécution plus ancienne seront supprimées. 
