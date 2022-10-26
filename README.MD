@@ -21,4 +21,4 @@
 Les données sont extraites et enregistrées dans le sous dossier "/data". Les données issues d'une éxécution plus ancienne seront supprimées. 
 
 ## Auteur 
-Thomas Moreau |°| 26/10/2022
+Thomas Moreau - - - 26/10/2022
