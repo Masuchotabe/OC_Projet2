@@ -11,7 +11,7 @@
   - Créer l'environnement virtuel avec la commande `python -m venv env`
   - Activer l'environnement virtuel : 
     - windows : `.\env\Scripts\activate`
-    - linux : `source env/Scripts/activate`
+    - linux : `source env/bin/activate`
   - Installer les bibliothèques mentionnées dans le fichier requirements.txt : `pip install -r requirements.txt` 
  
 ## Exécution
