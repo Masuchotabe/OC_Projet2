@@ -1,7 +1,7 @@
 # Application de web-scrapping du site [Books to Scrape](http://books.toscrape.com/index.html)
 
 ## Prérequis 
-  - gestionnaire de version Git
+  - Gestionnaire de version Git
   - Python 3.8 
   - Savoir utiliser l'invite de commande 
   
